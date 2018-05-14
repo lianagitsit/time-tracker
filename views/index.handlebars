@@ -1,4 +1,9 @@
-<h1>Page Title</h1>
-<p>Could work! ¯\_(ツ)_/¯</p>
+<div class="container">
+    <h1>Page Title</h1>
+    <p>Could work! ¯\_(ツ)_/¯</p>
 
-{{items}}
+    {{#each users}}
+    <p>Demo username from database: {{username}}</p>
+    <p>Demo password from database: {{password}}</p>
+    {{/each}}
+</div>
