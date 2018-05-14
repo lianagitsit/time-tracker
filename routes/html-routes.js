@@ -6,7 +6,7 @@ module.exports = function(app){
         var myObj = { 
             items: ["thingOne", "thingTwo"] 
         };
-
+        
         res.render("index", myObj);
     });
 }
