@@ -30,3 +30,19 @@ In the CLI, run:
 `sequelize db:seed:all` to seed the model with the demo user
 
 Once your database connection is established, start the server and navigate to `localhost:8080`. You should see a demo username and password displayed to the page. Now create your working branch!
+
+
+## Heroku Deployment Background Information
+
+Creating the app and provisioning the jawsdb for MySQL
+
+1. heroku create [project name]
+2. heroku addons:create jawsdb
+3. Get the secret URL: heroku config:get JAWSDB_URL
+4. Important: install sequelize-cli locally to make it work with remote migrations
+
+### Run migrations after deployment:
+
+`heroku run [migration command]`
+
+ex.: `heroku run sequelize db:migrate` or `heroku run sequelize db:seed:all`
