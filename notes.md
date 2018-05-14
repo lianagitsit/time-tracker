@@ -1,7 +1,9 @@
 # Notes
 
 Fork the master repo on GitHub
+
 Clone the fork to local machine
+
 `npm install`
 
 ## Configuration Background Information
@@ -11,13 +13,20 @@ In order to keep our database information secure, we need to use environment var
 ## Setup
 
 Create a .env file and add the following environment variables specific to local database:
+
 `DB_USER`
+
 `DB_PASS`
+
 `DB_HOST`
 
+
 In the CLI, run:
+
 `sequelize db:create` to establish the database
+
 `sequelize db:migrate` to migrate the existing model
+
 `sequelize db:seed:all` to seed the model with the demo user
 
 Once your database connection is established, start the server and navigate to `localhost:8080`. You should see a demo username and password displayed to the page. Now create your working branch!
