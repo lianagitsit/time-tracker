@@ -32,12 +32,13 @@
 <br>
 <div class="container">
     <img src="http://dm.greenville.edu/wp-content/uploads/2017/11/Getting-Stuff-Done-Since-2004.png" alt="Getting Stuff Done">
-    <h1>Page Title</h1>
-    <p>Could work! ¯\_(ツ)_/¯</p>
+    <h1 id="header">Get up, get organized, get there on time!</h1>
+    <br>
+    <p>Get shit done!</p>
 
     {{#each users}}
-    <p>Demo username from database: {{username}}</p>
-    <p>Demo password from database: {{password}}</p>
+    {{!-- <p>Demo username from database: {{username}}</p>
+    <p>Demo password from database: {{password}}</p> --}}
     {{/each}} 
     {{!-- Creates the google sign in button and links to onSignIn function --}}
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
