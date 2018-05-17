@@ -1,7 +1,10 @@
 .g-signin2 {
-    align-content: center;
+    width: 100%
 }
 
+.g-signin2 > div{
+margin: 0 auto;
+}
 .container {
     text-align: center;
 }
