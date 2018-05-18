@@ -5,9 +5,12 @@ window.onload = function () {
         console.log("button works");
         clock.start();
         $("#gitdone").hide();
-        $("#timer").show();
-        
-        
+        $("#timer").show();  
+    })
+    $("#done").on("click", function(){
+        clock.done();
+        $("#gitdone").show();
+        $("#timer").hide();
     })
     
 };
@@ -43,6 +46,12 @@ var clock =  {
             minutes = "0" + minutes
         }
         return minutes + ":" + seconds;
+    },
+    done: function(){
+        if (clockRunning){
+            clearInterval(intervalId);
+            clockRunning = false;
+        }
     }
 }
 
