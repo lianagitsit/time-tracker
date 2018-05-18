@@ -12,6 +12,7 @@ window.onload = function () {
         $("#gitdone").show();
         $("#timer").hide();
         clock.time = 0;
+        //push data to the db here???
     })
     
 };
