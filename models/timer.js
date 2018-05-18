@@ -11,6 +11,7 @@ window.onload = function () {
         clock.done();
         $("#gitdone").show();
         $("#timer").hide();
+        clock.time = 0;
     })
     
 };
