@@ -1,7 +1,12 @@
 window.onload = function () {
+
+    $("#timer").hide();
     $("#start").on("click", function(){
         console.log("button works");
         clock.start();
+        $("#gitdone").hide();
+        $("#timer").show();
+        
         
     })
     
