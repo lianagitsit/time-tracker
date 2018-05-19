@@ -5,24 +5,28 @@
                 alt="Tick Tock (placeholder)" width="100" height="40">
         </a>
     </div>
-    <div class="navbar-menu">
-        <div class="navbar-end">
-            <div class="navbar-item has-dropdown">
-                <a class="navbar-link">
-                    Click Meh!
-                </a>
-                <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                        About Us
-                    </a>
-                    <a class="navbar-item">
+   <div class="dropdown">
+            <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span>Dix</span>
+                    <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">
                         Calendar
                     </a>
-                    <a class="navbar-item">
+                    <a class="dropdown-item">
                         Settings
                     </a>
-                    <a class="navbar-item">
+                    <a href="#" class="dropdown-item is-active">
                         Contact Us!
+                    </a>
+                    <a href="../public/About.html" class="dropdown-item">
+                       About us
                     </a>
                 </div>
             </div>
@@ -36,9 +40,6 @@
     <p>Get shit done!</p>
 
     <br> 
-    {{!-- <div class="g-signin2" data-onsuccess="onSignIn">Sign In</div>
-    {{!-- Creats the sign out button and links to signOut function --}}
-    <a href="#" onclick="signOut();">Sign out</a> --}}
 
     <hr>
 
@@ -49,30 +50,6 @@
     <pre id="content"></pre>
 
     <script>
-
-        // Signs in the user and logs their profile info 
-        // and sets their Google ID to an id token to be sent to backend server.
-        /*function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var id_token = googleUser.getAuthResponse().id_token;
-
-            //$.post("/api/auth", { token: id_token }, (data, status) => {
-                //console.log("posted");
-            //})
-
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        }
-
-        // Signs out the user. Userinfo cached at this time so it auto signs in next time.
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        }*/
 
         // Client ID and API key from the Developer Console
         var CLIENT_ID = '361094340121-kkaacb25ru5kev00ganra8mslilj9jbc.apps.googleusercontent.com';
@@ -196,6 +173,13 @@
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+     <script>
+        var dropdown = document.querySelector('.dropdown');
+        dropdown.addEventListener('click', function (event) {
+            event.stopPropagation();
+            dropdown.classList.toggle('is-active');
+        });
     </script>
 
 </div>
