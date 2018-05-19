@@ -1,4 +1,4 @@
-window.onload = function () {
+$(document).ready(function (){
 
     $("#timer").hide();
     $("#start").on("click", function(){
@@ -14,8 +14,6 @@ window.onload = function () {
         clock.time = 0;
         //push data to the db here???
     })
-    
-};
 
 var intervalId;
 var clockRunning = false;
@@ -55,6 +53,7 @@ var clock =  {
             clockRunning = false;
         }
     }
-}
+    }
+});
 
 

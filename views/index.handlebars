@@ -39,9 +39,9 @@
     <p>Demo username from database: {{username}}</p>
     <p>Demo password from database: {{password}}</p> --}} {{/each}} {{!-- Creates the google sign in button and links to onSignIn
     function --}}
-    <div class="g-signin2" data-onsuccess="onSignIn">Sign In</div>
+    {{!-- <div class="g-signin2" data-onsuccess="onSignIn">Sign In</div> --}}
     {{!-- Creats the sign out button and links to signOut function --}}
-    <a href="#" onclick="signOut();">Sign out</a>
+    {{!-- <a href="#" onclick="signOut();">Sign out</a> --}}
 
     <hr>
 
@@ -55,7 +55,7 @@
 
         // Signs in the user and logs their profile info 
         // and sets their Google ID to an id token to be sent to backend server.
-        function onSignIn(googleUser) {
+        /*function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
             var id_token = googleUser.getAuthResponse().id_token;
 
@@ -75,11 +75,11 @@
             auth2.signOut().then(function () {
                 console.log('User signed out.');
             });
-        }
+        }*/
 
         // Client ID and API key from the Developer Console
-        var CLIENT_ID = 'CLIENT_ID';
-        var API_KEY = 'API_KEY';
+        var CLIENT_ID = '361094340121-kkaacb25ru5kev00ganra8mslilj9jbc.apps.googleusercontent.com';
+        var API_KEY = 'AIzaSyBFJdqwZ6zDkPKjjoGcw2nQHgoynb0AHzg';
 
         // Array of API discovery doc URLs for APIs used by the quickstart
         var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];

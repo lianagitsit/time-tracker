@@ -1,7 +1,7 @@
-window.onload = function(){
+$(document).ready(function (){
     $("#dropdown").on("click", function(){
         // event.stopPropagation()
         $("#dropdown").toggleClass("is-active");
         console.log("werk");
     })
-}
+})
