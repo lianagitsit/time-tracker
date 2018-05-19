@@ -15,8 +15,8 @@ module.exports = function (app) {
                 id: req.params.id
             },
             include: [db.Activity]
-        }).then(function (dbPost) {
-            res.json(dbPost);
+        }).then(function (dbUser) {
+            res.json(dbUser);
         });
     });
 
