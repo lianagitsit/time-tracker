@@ -11,7 +11,8 @@ module.exports = function(app){
             res.render("index", userObj);
         })
     });
-    
 
-
+    app.get("/calendar", function (req, res) {
+        res.render("calendar");
+    })
 }
