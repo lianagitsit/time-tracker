@@ -20,6 +20,10 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/api/time", function(req, res) {
+        res.send("It worked!");
+    })
+
     app.post("/api/users", function (req, res) {
         db.User.create(req.body).then(function (dbUser) {
             res.json(dbUser);

@@ -14,5 +14,5 @@ module.exports = function(app){
 
     app.get("/calendar", function (req, res) {
         res.render("calendar");
-    })
+    });
 }
