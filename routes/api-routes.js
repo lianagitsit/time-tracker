@@ -48,15 +48,23 @@ module.exports = function (app) {
     }
 
     function getAccessToken(oAuth2Client, idToken, callback) {
-        oAuth2Client.setCredentials(idToken);
-        // Store the token to disk for later program executions
-        try {
-            fs.writeFileSync(TOKEN_PATH, JSON.stringify(idToken));
-            console.log('Token stored to', TOKEN_PATH);
-        } catch (err) {
-            console.error(err);
-        }
-        callback(oAuth2Client);
+        const authUrl = oAuth2Client.generateAuthUrl({
+            access_type: 'offline',
+            scope: SCOPES,
+        });
+
+        oAuth2Client.getToken(code, (err, token) => {
+            if (err) return callback(err);
+            oAuth2Client.setCredentials(token);
+            // Store the token to disk for later program executions
+            try {
+                fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
+                console.log('Token stored to', TOKEN_PATH);
+            } catch (err) {
+                console.error(err);
+            }
+            callback(oAuth2Client);
+        });
     }
 
     /**
