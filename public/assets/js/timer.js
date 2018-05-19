@@ -5,13 +5,16 @@ $(document).ready(function (){
         console.log("button works");
         clock.start();
         $("#gitdone").hide();
-        $("#timer").show();  
+        $("#timer").show(); 
+        $("#start").hide(); 
     })
     $("#done").on("click", function(){
         clock.done();
         $("#gitdone").show();
         $("#timer").hide();
         clock.time = 0;
+        var timer = document.getElementById("timer");
+        console.log(timer);
         //push data to the db here???
     })
 
