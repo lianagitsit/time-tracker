@@ -40,9 +40,6 @@
     <p>Get shit done!</p>
 
     <br> 
-    {{!-- <div class="g-signin2" data-onsuccess="onSignIn">Sign In</div>
-    {{!-- Creats the sign out button and links to signOut function --}}
-    <a href="#" onclick="signOut();">Sign out</a> --}}
 
     <hr>
 
@@ -53,30 +50,6 @@
     <pre id="content"></pre>
 
     <script>
-
-        // Signs in the user and logs their profile info 
-        // and sets their Google ID to an id token to be sent to backend server.
-        /*function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var id_token = googleUser.getAuthResponse().id_token;
-
-            //$.post("/api/auth", { token: id_token }, (data, status) => {
-                //console.log("posted");
-            //})
-
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        }
-
-        // Signs out the user. Userinfo cached at this time so it auto signs in next time.
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        }*/
 
         // Client ID and API key from the Developer Console
         var CLIENT_ID = '361094340121-kkaacb25ru5kev00ganra8mslilj9jbc.apps.googleusercontent.com';
