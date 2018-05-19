@@ -13,9 +13,11 @@ $(document).ready(function (){
         $("#gitdone").show();
         $("#timer").hide();
         clock.time = 0;
-        var timer = document.getElementById("timer");
-        console.log(timer);
+        // var timer = document.getElementById("timer");
+        // console.log(timer);
         //push data to the db here???
+       console.log($("#timer").text());
+    
     })
 
 var intervalId;
