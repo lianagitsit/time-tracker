@@ -17,7 +17,7 @@ $(document).ready(function (){
         // console.log(timer);
         //push data to the db here???
        console.log($("#timer").text());
-    
+        var savedTime = $("#timer").text();
     })
 
 var intervalId;
