@@ -16,8 +16,8 @@ $(document).ready(function (){
         // var timer = document.getElementById("timer");
         // console.log(timer);
         //push data to the db here???
-       console.log($("#timer").text());
         var savedTime = $("#timer").text();
+        console.log(savedTime);
     })
 
 var intervalId;
