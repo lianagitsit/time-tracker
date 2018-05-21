@@ -20,9 +20,6 @@ module.exports = function (app) {
         });
     });
 
-    app.get("/api/timer", function (req, res){
-
-    });
 
     app.post("/api/time", function(req, res) {
         
