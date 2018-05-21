@@ -18,6 +18,7 @@ $(document).ready(function (){
         //push data to the db here???
         var savedTime = $("#timer").text();
         console.log(savedTime);
+        //Noah says that we would want to create an item on the first submission, then after we would update them?
     })
 
 var intervalId;
