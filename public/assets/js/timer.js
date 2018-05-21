@@ -61,5 +61,6 @@ var clock =  {
     }
     }
 });
+module.exports = clock;
 
 
