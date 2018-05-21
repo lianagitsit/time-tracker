@@ -31,8 +31,14 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:8080/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
-     db.User.findOrCreate({ googleId: profile.id }, function (err, user) {
-       return done(err, user);
+     db.User.findOrCreate({ 
+       where: {googleId: profile.id},
+       defaults: {googleId: profile.id}
+     }).spread((user, created) => {
+       console.log(user.get({
+         plain: true
+       }))
+       return console.log(created);
      });
 }
 ));
