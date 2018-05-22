@@ -16,6 +16,11 @@ $(document).ready(function (){
         // var timer = document.getElementById("timer");
         // console.log(timer);
         //push data to the db here???
+
+        var timeArr = [5, 10, 1, 3];
+        $.post("/api/time", {time: timeArr[Math.floor(Math.random() * timeArr.length)]}, result => {
+            console.log(result);
+        })
        console.log($("#timer").text());
     
     })
