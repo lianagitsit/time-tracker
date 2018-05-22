@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     $("#timer").hide();
+    $("#done").hide();
     $("#start").on("click", function () {
         console.log("button works");
         clock.start();
@@ -12,25 +13,27 @@ $(document).ready(function () {
         clock.done();
         $("#gitdone").show();
         $("#timer").hide();
+        $("#start").show();
         clock.time = 0;
         //push data to the db here???
         var savedTime = $("#timer").text();
+        console.log(savedTime);
 
 
-        var getTime = function () {
-            $.ajax({
-                method: "POST",
-                url: "/api/time",
-                data: {
-                    "user_time": savedTime
-                }
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
+        // var getTime = function () {
+        //     $.ajax({
+        //         method: "POST",
+        //         url: "/api/time",
+        //         data: {
+        //             "user_time": savedTime
+        //         }
+        //     })
+        //         .then(function (response) {
+        //             console.log(response);
+        //         })
 
-        }
-        getTime();
+        // }
+        // getTime();
 
         // //Noah says that we would want to create an item on the first submission, then after we would update them?
 
