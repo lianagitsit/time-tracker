@@ -15,4 +15,8 @@ module.exports = function(app){
     app.get("/calendar", function (req, res) {
         res.render("calendar");
     });
+
+    // app.get("/timer", function(req, res){
+    //     res.render("./timer.js");
+    // })
 }
