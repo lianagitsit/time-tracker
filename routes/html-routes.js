@@ -16,11 +16,15 @@ module.exports = function(app){
         res.render("calendar");
     });
 
-    app.get("/login", function (req, res) {
-        res.render("login");
-    });
+    // app.get("/login", function (req, res) {
+    //     res.render("login");
+    // });
 
     app.get("/timer", function (req, res) {
         res.sendFile(path.join(__dirname, "../public/Timer.html"));
+    })
+
+    app.get("/addEvent", function (req, res) {
+        res.render("addEvent");
     })
 }
