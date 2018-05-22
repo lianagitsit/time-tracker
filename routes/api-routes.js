@@ -1,17 +1,33 @@
 var db = require("../models");
-var passport = require("passport");
+// var passport = require("passport");
 
 module.exports = function (app) {
 
-    app.get('/auth/google',
-        passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+    app.post('/api/add', function (req, res) {
+        // var id_token = req.body.id_token;
+        // console.log(id_token);
+        res.json(req.body);
+        // db.User.findOrCreate({ 
+        //     where: {googleId: profile.id},
+        //     defaults: {googleId: profile.id}
+        // }).spread((user, created) => {
+        //     console.log(user.get({
+        //         plain: true
+        //     }))
+        //     return console.log(created);
+        // });
+    })
 
 
-    app.get('/auth/google/callback', 
-        passport.authenticate('google', { failureRedirect: '/login' }),
-        function(req, res) {
-          res.redirect('/');
-    });
+    // app.get('/auth/google',
+    //     passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+
+    // app.get('/auth/google/callback', 
+    //     passport.authenticate('google', { failureRedirect: '/login' }),
+    //     function(req, res) {
+    //       res.redirect('/');
+    // });
     ////////////////
     app.get("/api/users", function (req, res) {
         db.User.findAll({
