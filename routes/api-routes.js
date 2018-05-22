@@ -5,18 +5,48 @@ const { google } = require('googleapis');
 module.exports = function (app) {
 
     app.get('/auth/google',
-        passport.authenticate('google', { scope: ['profile'] }
+        passport.authenticate('google', {
+            scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
+            accessType: 'offline',
+            callbackURL: "http://localhost:8080/auth/google/callback"
+        }
         ));
 
-    // Maybe idk what this does or if I need it
-    app.get('/auth/google/calendar', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar.readonly'] }
-    ));
-
-    app.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/login' }),
+    app.get('/auth/google/callback', passport.authenticate('google', {
+        callbackURL: "http://localhost:8080/auth/google/callback",
+        failureRedirect: '/login'
+    }),
         function (req, res) {
             res.redirect('/secret');
-        });
+        }
+    );
+
+    // Maybe idk what this does or if I need it
+    app.get('/auth/google/calendar', passport.authenticate('google', {
+        scope: ['https://www.googleapis.com/auth/calendar.readonly'],
+        accessType: 'offline',
+        callbackURL: "http://localhost:8080/auth/google/calendar/callback"
+    }
+    ));
+
+    app.get('/auth/google/calendar/callback', passport.authenticate('google', {
+        callbackURL: "http://localhost:8080/auth/google/calendar/callback",
+        failureRedirect: '/failure'
+    }),
+        function (req, res) {
+            res.redirect('/success');
+        }
+    );
+
+    app.get('/success',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+            listEvents(passport.authenticate('google', {
+                scope: ['https://www.googleapis.com/auth/calendar.readonly'],
+                accessType: 'offline',
+                callbackURL: "http://localhost:8080/auth/google/calendar/callback"
+            }));
+        })
 
     // app.get('/secret',
     //     require('connect-ensure-login').ensureLoggedIn(),
@@ -33,7 +63,11 @@ module.exports = function (app) {
             // console.log(req);
             // console.log("RES");
             // console.log(res);
-            listEvents(passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar.readonly'] }));
+            listEvents(passport.authenticate('google', {
+                scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
+                accessType: 'offline',
+                callbackURL: "http://localhost:8080/auth/google/calendar/callback"
+            }));
             var userObj = req.user;
             res.render('secret', { user: userObj });
         });
@@ -47,7 +81,7 @@ module.exports = function (app) {
             maxResults: 10,
             singleEvents: true,
             orderBy: 'startTime',
-        }, (err, { data }) => {
+        }, (err, data) => {
             if (err) return console.log('The API returned an error: ' + err);
             const events = data.items;
             if (events.length) {
