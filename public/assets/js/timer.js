@@ -13,8 +13,6 @@ $(document).ready(function (){
         $("#gitdone").show();
         $("#timer").hide();
         clock.time = 0;
-        // var timer = document.getElementById("timer");
-        // console.log(timer);
         //push data to the db here???
         var savedTime = $("#timer").text();
         console.log(savedTime);

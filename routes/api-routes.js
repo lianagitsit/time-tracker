@@ -1,5 +1,5 @@
 var db = require("../models");
-var clock = require("../public/assets/js/timer.js");
+// var clock = require("../public/assets/js/timer.js");
 
 module.exports = function (app) {
     app.get("/api/users", function (req, res) {
