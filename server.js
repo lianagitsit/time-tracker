@@ -31,14 +31,25 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:8080/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
+  console.log("ACCESS TOKEN");
+  console.log(accessToken);
+  console.log("REFRESH TOKEN");
+  console.log(refreshToken);
+  console.log(profile.name.givenName);
      db.User.findOrCreate({ 
        where: {googleId: profile.id},
-       defaults: {googleId: profile.id}
+       defaults: {
+         googleId: profile.id,
+         display_name: profile.name.givenName,
+         access_token: accessToken,
+         refresh_token: refreshToken
+        }
      }).spread((user, created) => {
        console.log(user.get({
          plain: true
        }))
-       return console.log(created);
+      console.log(created);
+      return done(null, user);
      });
 }
 ));
