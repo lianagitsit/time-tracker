@@ -22,10 +22,10 @@ module.exports = function (app) {
 
 
     app.post("/api/time", function(req, res) {
-        db.Post.create({
-            user_time: req.body.user_time
-        }).then(function(dbPost){
-            res.json(dbPost);
+        db.Activity.create({
+            time: req.body.user_time
+        }).then(function(dbActivity){
+            res.json(dbActivity);
             res.send("It worked!");
         })
         
