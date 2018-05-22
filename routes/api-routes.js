@@ -1,5 +1,4 @@
 var db = require("../models");
-// var clock = require("../public/assets/js/timer.js");
 
 module.exports = function (app) {
     app.get("/api/users", function (req, res) {
@@ -24,11 +23,13 @@ module.exports = function (app) {
 
     app.post("/api/time", function(req, res) {
         db.Post.create({
-            user_time: savedTime
+            user_time: req.body.user_time
         }).then(function(dbPost){
             res.json(dbPost);
+            console.log("something something");
         })
         res.send("It worked!");
+        // req.body.user_time in order to access the info from the timer
     });
 
     app.post("/api/users", function (req, res) {
