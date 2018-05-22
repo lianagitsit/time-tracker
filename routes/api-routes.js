@@ -7,13 +7,11 @@ module.exports = function (app) {
     app.get('/auth/google',
         passport.authenticate('google', {
             scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
-            accessType: 'offline',
-            callbackURL: "http://localhost:8080/auth/google/callback"
+            accessType: 'offline'
         }
         ));
 
     app.get('/auth/google/callback', passport.authenticate('google', {
-        callbackURL: "http://localhost:8080/auth/google/callback",
         failureRedirect: '/login'
     }),
         function (req, res) {
@@ -22,79 +20,74 @@ module.exports = function (app) {
     );
 
     // Maybe idk what this does or if I need it
-    app.get('/auth/google/calendar', passport.authenticate('google', {
-        scope: ['https://www.googleapis.com/auth/calendar.readonly'],
-        accessType: 'offline',
-        callbackURL: "http://localhost:8080/auth/google/calendar/callback"
-    }
-    ));
+    // app.get('/auth/google/calendar', passport.authenticate('google', {
+    //     scope: ['https://www.googleapis.com/auth/calendar.readonly'],
+    //     accessType: 'offline',
+    //     callbackURL: "http://localhost:8080/auth/google/calendar/callback"
+    // }
+    // ));
 
-    app.get('/auth/google/calendar/callback', passport.authenticate('google', {
-        callbackURL: "http://localhost:8080/auth/google/calendar/callback",
-        failureRedirect: '/failure'
-    }),
-        function (req, res) {
-            res.redirect('/success');
-        }
-    );
+    // app.get('/auth/google/calendar/callback', passport.authenticate('google', {
+    //     callbackURL: "http://localhost:8080/auth/google/calendar/callback",
+    //     failureRedirect: '/failure'
+    // }),
+    //     function (req, res) {
+    //         res.redirect('/success');
+    //     }
+    // );
 
-    app.get('/success',
-        require('connect-ensure-login').ensureLoggedIn(),
-        function (req, res) {
-            listEvents(passport.authenticate('google', {
-                scope: ['https://www.googleapis.com/auth/calendar.readonly'],
-                accessType: 'offline',
-                callbackURL: "http://localhost:8080/auth/google/calendar/callback"
-            }));
-        })
-
-    // app.get('/secret',
+    // app.get('/success',
     //     require('connect-ensure-login').ensureLoggedIn(),
-    //     function(req, res){
-    //         var userObj = req.user;
-    //         res.render('secret', { user: userObj });
-    // });
+    //     function (req, res) {
+    //         listEvents(passport.authenticate('google', {
+    //             scope: ['https://www.googleapis.com/auth/calendar.readonly'],
+    //             accessType: 'offline',
+    //             callbackURL: "http://localhost:8080/auth/google/calendar/callback"
+    //         }));
+    //     })
 
-    // Test stuff, who knows, use the above original
     app.get('/secret',
         require('connect-ensure-login').ensureLoggedIn(),
-        function (req, res) {
-            // console.log("REQUEST");
-            // console.log(req);
-            // console.log("RES");
-            // console.log(res);
-            listEvents(passport.authenticate('google', {
-                scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
-                accessType: 'offline',
-                callbackURL: "http://localhost:8080/auth/google/calendar/callback"
-            }));
+        function(req, res){
             var userObj = req.user;
             res.render('secret', { user: userObj });
-        });
+    });
+
+    // Test stuff, who knows, use the above original
+    // app.get('/secret',
+    //     require('connect-ensure-login').ensureLoggedIn(),
+    //     function (req, res) {
+    //         listEvents(passport.authenticate('google', {
+    //             scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
+    //             accessType: 'offline'
+    //         }));
+    //         var userObj = req.user;
+    //         res.render('secret', { user: userObj });
+    //     });
 
     // Copied from the node quickstart, who knows
-    function listEvents(auth) {
-        const calendar = google.calendar({ version: 'v3', auth });
-        calendar.events.list({
-            calendarId: 'primary',
-            timeMin: (new Date()).toISOString(),
-            maxResults: 10,
-            singleEvents: true,
-            orderBy: 'startTime',
-        }, (err, data) => {
-            if (err) return console.log('The API returned an error: ' + err);
-            const events = data.items;
-            if (events.length) {
-                console.log('Upcoming 10 events:');
-                events.map((event, i) => {
-                    const start = event.start.dateTime || event.start.date;
-                    console.log(`${start} - ${event.summary}`);
-                });
-            } else {
-                console.log('No upcoming events found.');
-            }
-        });
-    }
+    // function listEvents(auth) {
+    //     const calendar = google.calendar({ version: 'v3', auth, key: 'AIzaSyBFJdqwZ6zDkPKjjoGcw2nQHgoynb0AHzg' });
+    //     calendar.events.list({
+    //         calendarId: 'primary',
+    //         timeMin: (new Date()).toISOString(),
+    //         maxResults: 10,
+    //         singleEvents: true,
+    //         orderBy: 'startTime',
+    //     }, (err, data) => {
+    //         if (err) return console.log('The API returned an error: ' + err);
+    //         const events = data.items;
+    //         if (events.length) {
+    //             console.log('Upcoming 10 events:');
+    //             events.map((event, i) => {
+    //                 const start = event.start.dateTime || event.start.date;
+    //                 console.log(`${start} - ${event.summary}`);
+    //             });
+    //         } else {
+    //             console.log('No upcoming events found.');
+    //         }
+    //     });
+    // }
 
 
     ////////////////
