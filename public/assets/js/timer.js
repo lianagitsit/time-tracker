@@ -8,6 +8,7 @@ $(document).ready(function () {
         $("#gitdone").hide();
         $("#timer").show();
         $("#start").hide();
+        $("#done").show();
     })
     $("#done").on("click", function () {
         clock.done();
