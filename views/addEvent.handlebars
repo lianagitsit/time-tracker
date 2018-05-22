@@ -15,25 +15,27 @@
         <label for="end">End time: </label>
         <input type="date" class="form-control" id="end" placeholder="What time does it end? (ex: HH:MM DD:MM:YYYY)">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" onclick="stuff()">Submit</button>
 </form>
 
 <script>
-    var summary = $("#summary").val().trim();
-    var location = $("#location").val().trim();
-    var start = $("#start").val().trim();
-    var end = $("#end").val().trim();
-    console.log(start);
-    console.log(end);
-    
-    var resource = {
-        "summary": summary,
-        "location": location,
-        "start": {
-            "dateTime": "2011-12-16T10:00:00.000-07:00"
-        },
-        "end": {
-            "dateTime": "2011-12-16T10:25:00.000-07:00"
-        }
+    function stuff() {
+        var summary = $("#summary").val().trim();
+        var location = $("#location").val().trim();
+        var start = $("#start").val().trim();
+        var end = $("#end").val().trim();
+        console.log(start);
+        console.log(end);
+
+        var resource = {
+            "summary": summary,
+            "location": location,
+            "start": {
+                "dateTime": "2011-12-16T10:00:00.000-07:00"
+            },
+            "end": {
+                "dateTime": "2011-12-16T10:25:00.000-07:00"
+            }
+        };
     };
 </script>
