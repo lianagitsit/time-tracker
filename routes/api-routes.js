@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var db = require("../models");
 var passport = require("passport");
 const { google } = require('googleapis');
@@ -6,7 +8,7 @@ module.exports = function (app) {
 
     app.get('/auth/google',
         passport.authenticate('google', {
-            scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
+            scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/plus.login'],
             accessType: 'offline'
         }
         ));
@@ -19,75 +21,68 @@ module.exports = function (app) {
         }
     );
 
-    // Maybe idk what this does or if I need it
-    // app.get('/auth/google/calendar', passport.authenticate('google', {
-    //     scope: ['https://www.googleapis.com/auth/calendar.readonly'],
-    //     accessType: 'offline',
-    //     callbackURL: "http://localhost:8080/auth/google/calendar/callback"
-    // }
-    // ));
-
-    // app.get('/auth/google/calendar/callback', passport.authenticate('google', {
-    //     callbackURL: "http://localhost:8080/auth/google/calendar/callback",
-    //     failureRedirect: '/failure'
-    // }),
-    //     function (req, res) {
-    //         res.redirect('/success');
-    //     }
-    // );
-
-    // app.get('/success',
-    //     require('connect-ensure-login').ensureLoggedIn(),
-    //     function (req, res) {
-    //         listEvents(passport.authenticate('google', {
-    //             scope: ['https://www.googleapis.com/auth/calendar.readonly'],
-    //             accessType: 'offline',
-    //             callbackURL: "http://localhost:8080/auth/google/calendar/callback"
-    //         }));
-    //     })
-
     app.get('/secret',
         require('connect-ensure-login').ensureLoggedIn(),
-        function(req, res){
-            var userObj = req.user;
-            res.render('secret', { user: userObj });
-    });
+        function (req, res) {
+            var accessToken, refreshToken;
+            db.User.findOne({
+                where: {
+                    googleId: req.user.googleId
+                }
+            }).then(dbUser => {
+                accessToken = dbUser.access_token;
+                refreshToken = dbUser.refresh_token;
+                console.log("ACCESS FROM DB");
+                console.log(accessToken);
+                console.log("REFRESH FROM DB");
+                console.log(refreshToken);
 
-    // Test stuff, who knows, use the above original
-    // app.get('/secret',
-    //     require('connect-ensure-login').ensureLoggedIn(),
-    //     function (req, res) {
-    //         listEvents(passport.authenticate('google', {
-    //             scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'],
-    //             accessType: 'offline'
-    //         }));
-    //         var userObj = req.user;
-    //         res.render('secret', { user: userObj });
-    //     });
+                const oauth2Client = new google.auth.OAuth2(
+                    process.env.GOOGLE_CLIENT_ID,
+                    process.env.GOOGLE_CLIENT_SECRET,
+                    "http://localhost:8080/auth/google/callback"
+                );
+    
+                var tokens = {
+                    access_token: accessToken,
+                    refresh_token: refreshToken
+                }
+    
+                oauth2Client.setCredentials(tokens);
+    
+                listEvents(oauth2Client);
+    
+                var userObj = req.user;
+                res.render('secret', { user: userObj });
+    
+            });
+
+        });
+
 
     // Copied from the node quickstart, who knows
-    // function listEvents(auth) {
-    //     const calendar = google.calendar({ version: 'v3', auth, key: 'AIzaSyBFJdqwZ6zDkPKjjoGcw2nQHgoynb0AHzg' });
-    //     calendar.events.list({
-    //         calendarId: 'primary',
-    //         timeMin: (new Date()).toISOString(),
-    //         maxResults: 10,
-    //         singleEvents: true,
-    //         orderBy: 'startTime',
-    //     }, (err, data) => {
-    //         if (err) return console.log('The API returned an error: ' + err);
-    //         const events = data.items;
-    //         if (events.length) {
-    //             console.log('Upcoming 10 events:');
-    //             events.map((event, i) => {
-    //                 const start = event.start.dateTime || event.start.date;
-    //                 console.log(`${start} - ${event.summary}`);
-    //             });
-    //         } else {
-    //             console.log('No upcoming events found.');
-    //         }
-    //     });
-    // }
+    function listEvents(auth) {
+        const calendar = google.calendar({ version: 'v3', auth });
+        calendar.events.list({
+            calendarId: 'primary',
+            timeMin: (new Date()).toISOString(),
+            maxResults: 10,
+            singleEvents: true,
+            orderBy: 'startTime',
+        }, (err, {data}) => {
+            if (err) return console.log('The API returned an error: ' + err);
+            const events = data.items;
+            if (events.length) {
+                console.log('Upcoming 10 events:');
+                events.map((event, i) => {
+                    const start = event.start.dateTime || event.start.date;
+                    console.log(`${start} - ${event.summary}`);
+                });
+            } else {
+                console.log('No upcoming events found.');
+            }
+        });
+    }
 
 
     ////////////////

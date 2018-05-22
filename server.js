@@ -40,7 +40,9 @@ function(accessToken, refreshToken, profile, done) {
        where: {googleId: profile.id},
        defaults: {
          googleId: profile.id,
-         display_name: profile.name.givenName
+         display_name: profile.name.givenName,
+         access_token: accessToken,
+         refresh_token: refreshToken
         }
      }).spread((user, created) => {
        console.log(user.get({
