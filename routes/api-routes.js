@@ -4,15 +4,25 @@ var passport = require("passport");
 module.exports = function (app) {
 
     app.get('/auth/google',
-        passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }
+        passport.authenticate('google', { scope: ['profile'] }
     ));
 
 
     app.get('/auth/google/callback', 
         passport.authenticate('google', { failureRedirect: '/login' }),
         function(req, res) {
-          res.redirect('/');
+          res.redirect('/secret');
     });
+
+    app.get('/secret',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function(req, res){
+            var userObj = req.user;
+            res.render('secret', { user: userObj });
+    });
+  
+
+
     ////////////////
     app.get("/api/users", function (req, res) {
         db.User.findAll({
