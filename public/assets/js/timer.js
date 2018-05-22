@@ -21,20 +21,20 @@ $(document).ready(function () {
         console.log(savedTime);
 
 
-        // var getTime = function () {
-        //     $.ajax({
-        //         method: "POST",
-        //         url: "/api/time",
-        //         data: {
-        //             "user_time": savedTime
-        //         }
-        //     })
-        //         .then(function (response) {
-        //             console.log(response);
-        //         })
+        var getTime = function () {
+            $.ajax({
+                method: "POST",
+                url: "/api/time",
+                data: {
+                    "user_time": savedTime
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
 
-        // }
-        // getTime();
+        }
+        getTime();
 
         // //Noah says that we would want to create an item on the first submission, then after we would update them?
 

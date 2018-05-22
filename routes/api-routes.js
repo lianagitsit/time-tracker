@@ -26,9 +26,9 @@ module.exports = function (app) {
             user_time: req.body.user_time
         }).then(function(dbPost){
             res.json(dbPost);
-            console.log("something something");
+            res.send("It worked!");
         })
-        res.send("It worked!");
+        
         // req.body.user_time in order to access the info from the timer
     });
 
