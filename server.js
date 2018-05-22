@@ -38,7 +38,8 @@ function(accessToken, refreshToken, profile, done) {
        console.log(user.get({
          plain: true
        }))
-       return console.log(created);
+      console.log(created);
+      return done(null, user);
      });
 }
 ));
