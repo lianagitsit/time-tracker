@@ -17,8 +17,11 @@ $(document).ready(function () {
         $("#start").show();
         clock.time = 0;
         //push data to the db here???
+
         var savedTime = $("#timer").text();
         console.log(savedTime);
+    })
+
 
 
         var getTime = function () {
