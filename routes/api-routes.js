@@ -2,7 +2,7 @@ require("dotenv").config();
 
 var db = require("../models");
 var passport = require("passport");
-const { google } = require('googleapis');
+const { google } = require("googleapis");
 
 module.exports = function (app) {
 
@@ -17,11 +17,11 @@ module.exports = function (app) {
         failureRedirect: '/login'
     }),
         function (req, res) {
-            res.redirect('/secret');
+            res.redirect('/calendar');
         }
     );
 
-    app.get('/secret',
+    app.get('/calendar',
         require('connect-ensure-login').ensureLoggedIn(),
         function (req, res) {
             var accessToken, refreshToken;
@@ -42,48 +42,35 @@ module.exports = function (app) {
                     process.env.GOOGLE_CLIENT_SECRET,
                     "http://localhost:8080/auth/google/callback"
                 );
-    
+
                 var tokens = {
                     access_token: accessToken,
                     refresh_token: refreshToken
                 }
-    
-                oauth2Client.setCredentials(tokens);
-    
-                listEvents(oauth2Client);
-    
-                var userObj = req.user;
-                res.render('secret', { user: userObj });
-    
-            });
 
+                oauth2Client.setCredentials(tokens);
+
+                listEvents(oauth2Client, function (CALENDAR_URL) {
+                    res.render('calendar', { url: CALENDAR_URL });
+                });
+            });
         });
 
 
     // Copied from the node quickstart, who knows
-    function listEvents(auth) {
+    function listEvents(auth, cb) {
         const calendar = google.calendar({ version: 'v3', auth });
         calendar.events.list({
             calendarId: 'primary',
-            timeMin: (new Date()).toISOString(),
-            maxResults: 10,
-            singleEvents: true,
-            orderBy: 'startTime',
-        }, (err, {data}) => {
+        }, (err, { data }) => {
             if (err) return console.log('The API returned an error: ' + err);
-            const events = data.items;
-            if (events.length) {
-                console.log('Upcoming 10 events:');
-                events.map((event, i) => {
-                    const start = event.start.dateTime || event.start.date;
-                    console.log(`${start} - ${event.summary}`);
-                });
-            } else {
-                console.log('No upcoming events found.');
-            }
+
+            var CALENDAR_ID = data.summary;
+            var CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=" + CALENDAR_ID + "&ctz=America%2FNew_York";
+
+            cb(CALENDAR_URL);
         });
     }
-
 
     ////////////////
     app.get("/api/users", function (req, res) {
@@ -100,8 +87,8 @@ module.exports = function (app) {
                 id: req.params.id
             },
             include: [db.Activity]
-        }).then(function (dbPost) {
-            res.json(dbPost);
+        }).then(function (dbUser) {
+            res.json(dbUser);
         });
     });
 
