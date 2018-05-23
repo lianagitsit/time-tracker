@@ -19,17 +19,16 @@ $(document).ready(function () {
         //push data to the db here???
 
         var savedTime = $("#timer").text();
-        console.log(savedTime);
+        getTime(savedTime);
     })
 
-
-
-    var getTime = function () {
+    var getTime = function (time) {
         $.ajax({
             method: "POST",
             url: "/api/time",
             data: {
-                "user_time": savedTime
+                "name": "general",
+                "user_time": time
             }
         })
             .then(function (response) {
@@ -37,7 +36,6 @@ $(document).ready(function () {
             })
 
     }
-    getTime();
 
     // //Noah says that we would want to create an item on the first submission, then after we would update them?
 

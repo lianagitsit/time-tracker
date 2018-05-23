@@ -94,6 +94,7 @@ module.exports = function (app) {
 
     app.post("/api/time", function(req, res) {
         db.Activity.create({
+            name: req.body.name,
             time: req.body.user_time
         }).then(function(dbActivity){
             res.json(dbActivity);
