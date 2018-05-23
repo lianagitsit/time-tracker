@@ -26,6 +26,10 @@ margin: 0 center;
     font-size: 100px;
 }
 
+
+#logo {
+    size: 1000px;
+
 #signout-button {
     background-color: red;
     border: none;
@@ -88,4 +92,5 @@ margin: 0 center;
     left: 0;
     width: 100%;
     height: 100%;
+
 }
