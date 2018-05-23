@@ -5,10 +5,15 @@
 <hr> {{!--
 <pre id="content"></pre> --}}
 <div class="responsive=-iframe-container">
-    <iframe id="calendar" src="" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    <iframe id="calendar" src={{url}} style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 </div>
 
 <script>
+    console.log({{url}});
+
+</script>
+
+{{!-- <script>
 
     // Client ID and API key from the Developer Console
     var CLIENT_ID = '361094340121-kkaacb25ru5kev00ganra8mslilj9jbc.apps.googleusercontent.com';
@@ -159,4 +164,4 @@
 
 </script>
 
-<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script> --}}
