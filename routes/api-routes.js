@@ -92,16 +92,16 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/api/time", function (req, res) {
-        var activityTime = req.body.time;
+    app.post("/api/time", function(req, res) {
         db.Activity.create({
-            name: "general",
-            time: activityTime
-        }).then(dbActivity => {
-            res.send(dbActivity);
-        });
-
-    })
+            time: req.body.user_time
+        }).then(function(dbActivity){
+            res.json(dbActivity);
+            res.send("It worked!");
+        })
+        
+        // req.body.user_time in order to access the info from the timer
+    });
 
     app.post("/api/users", function (req, res) {
         db.User.create(req.body).then(function (dbUser) {
