@@ -58,5 +58,19 @@
                 ]
             }
         };
+        getResource(resource);
+        window.location.href="/calendar";
     });
+
+    var getResource = function (resource) {
+        $.ajax({
+            method: "POST",
+            url: "/api/addEvent",
+            data: {
+                resource: resource
+            }
+        }).then(function (response) {
+            console.log(response);
+        })
+    };
 </script>

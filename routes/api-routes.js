@@ -3,6 +3,7 @@ require("dotenv").config();
 var db = require("../models");
 var passport = require("passport");
 const { google } = require("googleapis");
+var gAuth;
 
 module.exports = function (app) {
 
@@ -49,6 +50,11 @@ module.exports = function (app) {
                 }
 
                 oauth2Client.setCredentials(tokens);
+                function getAuth() {
+                    var gAuth = oauth2Client;
+                    return gAuth;
+                }
+                gAuth = getAuth();
 
                 listEvents(oauth2Client, function (CALENDAR_URL) {
                     res.render('calendar', { url: CALENDAR_URL });
@@ -92,20 +98,39 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/api/time", 
+    app.post("/api/addEvent",
         require('connect-ensure-login').ensureLoggedIn(),
-        function(req, res) {
-        db.Activity.create({
-            name: req.body.activity_type,
-            time: req.body.user_time,
-            UserId: req.user.id
-        }).then(function(dbActivity){
-            res.json(dbActivity);
-            // res.send("It worked!");
+        function (req, res) {
+            var auth = gAuth;
+            const calendar = google.calendar({ version: 'v3', auth });
+            calendar.events.insert({
+                auth: auth,
+                calendarId: 'primary',
+                resource: req.body.resource,
+            }, function (err, event) {
+                if (err) {
+                    console.log('There was an error contacting the Calendar service: ' + err);
+                    return;
+                }
+                console.log('Event created: %s', event.summary);
+            });
+
         })
-        
-        // req.body.user_time in order to access the info from the timer
-    });
+
+    app.post("/api/time",
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+            db.Activity.create({
+                name: req.body.activity_type,
+                time: req.body.user_time,
+                UserId: req.user.id
+            }).then(function (dbActivity) {
+                res.json(dbActivity);
+                // res.send("It worked!");
+            })
+
+            // req.body.user_time in order to access the info from the timer
+        });
 
     app.post("/api/users", function (req, res) {
         db.User.create(req.body).then(function (dbUser) {
