@@ -69,6 +69,9 @@ var clock = {
     timeConverter: function (t) {
         var minutes = Math.floor(t / 60);
         var seconds = Math.floor(t - (minutes * 60));
+        // var minutes2 = Math.ceil(t / 60);
+        // var seconds2 = Math.ceil(t - (minutes * 60));
+
         if (seconds < 10) {
             seconds = "0" + seconds;
         };
@@ -79,6 +82,8 @@ var clock = {
             minutes = "0" + minutes
         }
         return minutes + ":" + seconds;
+
+
     },
     done: function () {
         if (clockRunning) {

@@ -29,4 +29,8 @@ module.exports = function (app) {
         req.logout();
         res.redirect('/');
     });
+
+    app.get("/about", function(req, res){
+        res.render("about");
+    })
 }
