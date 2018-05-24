@@ -4,6 +4,7 @@ var db = require("../models");
 var passport = require("passport");
 const { google } = require("googleapis");
 var gAuth;
+var moment = require("moment");
 
 module.exports = function (app) {
 
@@ -78,25 +79,65 @@ module.exports = function (app) {
         });
     }
 
-    ////////////////
-    app.get("/api/users", function (req, res) {
-        db.User.findAll({
-            include: [db.Activity]
-        }).then(function (dbUser) {
-            res.json(dbUser);
-        });
-    });
-
-    app.get("/api/users/:id", function (req, res) {
-        db.User.findOne({
+    function addGetReadyTime(auth, data, userId) {
+        db.Activity.findAll({
             where: {
-                id: req.params.id
-            },
-            include: [db.Activity]
-        }).then(function (dbUser) {
-            res.json(dbUser);
-        });
-    });
+                UserId: userId
+            }
+        }).then(dbActivity => {
+            // console.log(dbActivity);
+            var sumTime = 0;
+            for (var i = 0; i < dbActivity.length; i++) {
+                console.log("time " + i);
+                console.log(dbActivity[i].dataValues.time);
+                sumTime += dbActivity[i].dataValues.time;
+                console.log("current sum")
+                console.log(sumTime);
+            }
+            averageTime = Math.ceil(sumTime / dbActivity.length);
+            // console.log("sum");
+            // console.log(sumTime);
+            console.log("Average time");
+            console.log(averageTime);
+
+            console.log("ready start:");
+            console.log(moment(data.start.dateTime).subtract(averageTime, 'm').format());
+
+            console.log("ready end:")
+            console.log(data.start.dateTime);
+            var resource = {
+                "summary": "Get ready!",
+                "start": {
+                    "dateTime": moment(data.start.dateTime).subtract(averageTime, 'm')
+                },
+                "end": {
+                    "dateTime": data.start.dateTime,
+                },
+                "reminders": {
+                    "useDefault": false,
+                    "overrides": [
+                        {
+                            "method": "popup",
+                            "minutes": 2
+                        }
+                    ]
+                }
+            };
+
+            const calendar = google.calendar({ version: 'v3', auth });
+            calendar.events.insert({
+                auth: auth,
+                calendarId: 'primary',
+                resource: resource,
+            }, function (err, event) {
+                if (err) {
+                    console.log('There was an error contacting the Calendar service: ' + err);
+                    return;
+                }
+                console.log('Get ready event created!');
+            });
+        })
+    }
 
     app.post("/api/addEvent",
         require('connect-ensure-login').ensureLoggedIn(),
@@ -113,9 +154,12 @@ module.exports = function (app) {
                     return;
                 }
                 console.log('Event created!');
+                console.log(event);
+                addGetReadyTime(auth, event.data, req.user.id);
+                res.end();
             });
-
-        })
+        }
+    )
 
     app.post("/api/time",
         require('connect-ensure-login').ensureLoggedIn(),
@@ -130,21 +174,6 @@ module.exports = function (app) {
             })
 
             // req.body.user_time in order to access the info from the timer
-        });
-
-    app.post("/api/users", function (req, res) {
-        db.User.create(req.body).then(function (dbUser) {
-            res.json(dbUser);
-        });
-    });
-
-    app.delete("/api/users/:id", function (req, res) {
-        db.User.destroy({
-            where: {
-                id: req.params.id
-            }
-        }).then(function (dbUser) {
-            res.json(dbUser);
-        });
-    });
+        }
+    );
 }
