@@ -23,11 +23,11 @@
         <label for="endDate">End Date: </label>
         <input type="date" class="form-control" id="endDate" placeholder="What day does it end? (ex: DD:MM:YYYY)">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script>
-    $("button").on("click", function (event) {
+    $("#submit").on("click", function (event) {
         event.preventDefault();
         var summary = $("#summary").val().trim();
         var location = $("#location").val().trim();
