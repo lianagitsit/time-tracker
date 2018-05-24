@@ -112,7 +112,7 @@ module.exports = function (app) {
                     console.log('There was an error contacting the Calendar service: ' + err);
                     return;
                 }
-                console.log('Event created: %s', event.summary);
+                console.log('Event created!');
             });
 
         })
