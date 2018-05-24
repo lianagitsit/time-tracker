@@ -138,6 +138,12 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/api/about", function (req, res) {
+        db.User.create(req.body).then(function (dbUser) {
+            res.render("about");
+        });
+    });
+
     app.delete("/api/users/:id", function (req, res) {
         db.User.destroy({
             where: {
