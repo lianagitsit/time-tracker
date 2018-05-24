@@ -13,10 +13,57 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<meta name="google-signin-client_id" content="361094340121-kkaacb25ru5kev00ganra8mslilj9jbc.apps.googleusercontent.com">
 	<script src="/assets/js/main.js"></script>
+	<script type="text/javascript" src="/assets/js/timer.js"></script>
 </head>
 
 <body>
+	<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<div class="navbar-item">
+				<img src="http://images.slackreview.com/logos/trackytimetracker.png" alt="Time Tracker: keeping you on time" width="50" height="60"
+				 margin="0" padding="0">
+			</div>
+			<div class="dropdown" "is-right">
+				<div class="dropdown-trigger">
+					<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+						<span>Menu</span>
+						<span class="icon is-small">
+							<i class="fas fa-angle-down" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+				<div class="dropdown-menu" id="dropdown-menu" role="menu">
+					<div class="dropdown-content">
+						<a href="/calendar" class="dropdown-item">
+							Calendar
+						</a>
+						{{!--
+						<a href="/settings" class="dropdown-item">
+							Settings
+						</a> --}}
+						<a href="/timer" class="dropdown-item">
+							Track a Time!
+						</a>
+						<a href="/contact" class="dropdown-item">
+							Contact Us!
+						</a>
+						<a href="../public/About.html" class="dropdown-item">
+							About us
+						</a>
+					</div>
+				</div>
+			</div>
+			<button class="calButton" id="addActivity" onclick="location.href='/timer'">Track a Time</button>
+			<button class="calButton" id="signout-button" onclick="location.href='/logout'">Sign Out</button>
+	</nav>
 	{{{ body }}}
+	<script>
+		var dropdown = document.querySelector('.dropdown');
+		dropdown.addEventListener('click', function (event) {
+			event.stopPropagation();
+			dropdown.classList.toggle('is-active');
+		});
+	</script>
 </body>
 
 </html>

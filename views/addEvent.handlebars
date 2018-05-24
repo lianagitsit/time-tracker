@@ -23,11 +23,11 @@
         <label for="endDate">End Date: </label>
         <input type="date" class="form-control" id="endDate" placeholder="What day does it end? (ex: DD:MM:YYYY)">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script>
-    $("button").on("click", function (event) {
+    $("#submit").on("click", function (event) {
         event.preventDefault();
         var summary = $("#summary").val().trim();
         var location = $("#location").val().trim();
@@ -35,8 +35,8 @@
         var startDate = $("#startDate").val().trim();
         var endTime = $("#endTime").val().trim();
         var endDate = $("#endDate").val().trim();
-        var startDateTime = startDate + "T" + startTime + ":00.000-07:00";
-        var endDateTime = endDate + "T" + endTime + ":00.000-07:00";
+        var startDateTime = startDate + "T" + startTime + ":00.000-04:00";
+        var endDateTime = endDate + "T" + endTime + ":00.000-04:00";
 
         var resource = {
             "summary": summary,
@@ -58,5 +58,19 @@
                 ]
             }
         };
+        getResource(resource);
+        window.location.href="/calendar";
     });
+
+    var getResource = function (resource) {
+        $.ajax({
+            method: "POST",
+            url: "/api/addEvent",
+            data: {
+                resource: resource
+            }
+        }).then(function (response) {
+            console.log(response);
+        })
+    };
 </script>

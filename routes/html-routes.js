@@ -2,9 +2,9 @@ var path = require("path");
 var db = require("../models");
 var passport = require("passport");
 
-module.exports = function(app){
+module.exports = function (app) {
 
-    app.get("/", function(req, res) {
+    app.get("/", function (req, res) {
         res.render("index");
     });
 
@@ -12,11 +12,11 @@ module.exports = function(app){
         res.render("calendar");
     });
 
-    app.get("/timer", 
+    app.get("/timer",
         require('connect-ensure-login').ensureLoggedIn(),
         function (req, res) {
-            res.sendFile(path.join(__dirname, "../public/Timer.html"));
-    })
+            res.render("timer");
+        })
 
     app.get("/addEvent", function (req, res) {
         res.render("addEvent");
@@ -25,7 +25,7 @@ module.exports = function(app){
         res.render("login");
     });
 
-    app.get('/logout', function(req, res){
+    app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });
