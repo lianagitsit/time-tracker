@@ -5,7 +5,7 @@ var passport = require("passport");
 const { google } = require("googleapis");
 var gAuth;
 var moment = require("moment");
-
+const ROOT = process.env.PORT ? "https://kls-time-tracker.herokuapp.com" : "http://localhost:8080";
 module.exports = function (app) {
 
     app.get('/auth/google',
@@ -42,7 +42,7 @@ module.exports = function (app) {
                 const oauth2Client = new google.auth.OAuth2(
                     process.env.GOOGLE_CLIENT_ID,
                     process.env.GOOGLE_CLIENT_SECRET,
-                    "http://localhost:8080/auth/google/callback"
+                    `${ROOT}/auth/google/callback`
                 );
 
                 var tokens = {
