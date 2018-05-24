@@ -18,6 +18,8 @@ var app = express();
 
 var PORT = process.env.PORT || 8080;
 
+const ROOT = process.env.PORT ? "https://kls-time-tracker.herokuapp.com" : "http://localhost:8080";
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,7 +30,7 @@ app.set("view engine", "handlebars");
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:8080/auth/google/callback"
+  callbackURL: `${ROOT}/auth/google/callback`
 },
 function(accessToken, refreshToken, profile, done) {
   console.log("ACCESS TOKEN");
