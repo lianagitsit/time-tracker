@@ -8,34 +8,55 @@
         <input type="text" class="form-control" id="location" placeholder="Where is the event?">
     </div>
     <div class="form-group">
-        <label for="start">Start time: </label>
-        <input type="date" class="form-control" id="start" placeholder="What time does it start? (ex: HH:MM DD:MM:YYYY)">
+        <label for="startTime">Start Time: </label>
+        <input type="time" class="form-control" id="startTime" placeholder="What time does the event start? (ex: HH:MM)">
     </div>
     <div class="form-group">
-        <label for="end">End time: </label>
-        <input type="date" class="form-control" id="end" placeholder="What time does it end? (ex: HH:MM DD:MM:YYYY)">
+        <label for="startDate">Start Date: </label>
+        <input type="date" class="form-control" id="startDate" placeholder="What day does it start? (ex: DD:MM:YYYY)">
     </div>
-    <button type="submit" class="btn btn-primary" onclick="stuff()">Submit</button>
+    <div class="form-group">
+        <label for="endTime">End Time: </label>
+        <input type="time" class="form-control" id="endTime" placeholder="What time does the event end? (ex: HH:MM)">
+    </div>
+    <div class="form-group">
+        <label for="endDate">End Date: </label>
+        <input type="date" class="form-control" id="endDate" placeholder="What day does it end? (ex: DD:MM:YYYY)">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script>
-    function stuff() {
+    $("button").on("click", function (event) {
+        event.preventDefault();
         var summary = $("#summary").val().trim();
         var location = $("#location").val().trim();
-        var start = $("#start").val().trim();
-        var end = $("#end").val().trim();
-        console.log(start);
-        console.log(end);
+        var startTime = $("#startTime").val().trim();
+        var startDate = $("#startDate").val().trim();
+        var endTime = $("#endTime").val().trim();
+        var endDate = $("#endDate").val().trim();
+        var startDateTime = startDate + "T" + startTime + ":00.000-07:00";
+        var endDateTime = endDate + "T" + endTime + ":00.000-07:00";
 
         var resource = {
             "summary": summary,
             "location": location,
             "start": {
-                "dateTime": "2011-12-16T10:00:00.000-07:00"
+                "dateTime": startDateTime,
             },
             "end": {
-                "dateTime": "2011-12-16T10:25:00.000-07:00"
+                "dateTime": endDateTime,
+            },
+            "colorId": "10",
+            "reminders": {
+                "useDefault": false,
+                "overrides": [
+                    {
+                        "method": "popup",
+                        "minutes": 10
+                    }
+                ]
             }
         };
-    };
+    });
 </script>

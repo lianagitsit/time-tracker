@@ -18,12 +18,6 @@ $(document).ready(function () {
         clock.time = 0;
         //push data to the db here???
 
-<<<<<<< HEAD
-        var savedTime = $("#timer").text();
-        getTime(savedTime);
-    })
-
-=======
         var logged = $("#timer").text();
         var savedTime = parseInt(logged.slice(0, logged.indexOf(":")));
         console.log(savedTime);
@@ -33,17 +27,12 @@ $(document).ready(function () {
 
 
 
->>>>>>> 3c837c296728573db03b8c99c5e8e93808813d8b
     var getTime = function (time) {
         $.ajax({
             method: "POST",
             url: "/api/time",
             data: {
-<<<<<<< HEAD
-                "name": "general",
-=======
                 "activity_type": "general",
->>>>>>> 3c837c296728573db03b8c99c5e8e93808813d8b
                 "user_time": time
             }
         })
