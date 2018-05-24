@@ -118,7 +118,7 @@ module.exports = function (app) {
                     "overrides": [
                         {
                             "method": "popup",
-                            "minutes": 2
+                            "minutes": 0
                         }
                     ]
                 }
