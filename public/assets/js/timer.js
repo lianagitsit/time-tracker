@@ -5,14 +5,14 @@ $(document).ready(function () {
     $("#start").on("click", function () {
         console.log("button works");
         clock.start();
-        $("#gitdone").hide();
+        $("#timerInfo").hide();
         $("#timer").show();
         $("#start").hide();
         $("#done").show();
     })
     $("#done").on("click", function () {
         clock.done();
-        $("#gitdone").show();
+        $("#timerInfo").show();
         $("#timer").hide();
         $("#start").show();
         clock.time = 0;

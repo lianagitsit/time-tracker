@@ -6,11 +6,13 @@
 	<title>Title</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-	<link rel="stylesheet" href="/assets/css/style.css">
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	 crossorigin="anonymous"></script>
+	{{!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> --}}
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" href="/assets/css/style.css">
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<meta name="google-signin-client_id" content="361094340121-kkaacb25ru5kev00ganra8mslilj9jbc.apps.googleusercontent.com">
 	<script src="/assets/js/main.js"></script>
@@ -20,46 +22,43 @@
 <body>
 	<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
-			<div class="navbar-item">
-				<img src="http://images.slackreview.com/logos/trackytimetracker.png" alt="Time Tracker: keeping you on time" width="50" height="60"
-				 margin="0" padding="0">
+			<img src="http://images.slackreview.com/logos/trackytimetracker.png" onclick="location.href='/calendar'" width="60px">
+		</div>
+		<div class="navbar-menu">
+			<div class="navbar-start">
+				<h1 class="title">Time Tracker</h1>
+				<h4>Get up, get organized, get there on time!</h4>
 			</div>
-			<div class="dropdown" "is-right">
-				<div class="dropdown-trigger">
-					<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-						<span>Menu</span>
-						<span class="icon is-small">
-							<i class="fas fa-angle-down" aria-hidden="true"></i>
-						</span>
-					</button>
+			<div class="navbar-end">
+				<div id="navButtons">
+					<button class="calButton" id="addActivity" onclick="location.href='/timer'">Track a Time</button>
+					<button class="calButton" id="signout-button" onclick="location.href='/logout'">Sign Out</button>
 				</div>
-				<div class="dropdown-menu" id="dropdown-menu" role="menu">
-					<div class="dropdown-content">
-						<a href="/calendar" class="dropdown-item">
+				<div class="navbar-item has-dropdown">
+					<a class="navbar-link">
+						Menu
+					</a>
+					<div class="navbar-dropdown">
+						<a class="navbar-item" href="/calendar">
 							Calendar
 						</a>
-						{{!--
-						<a href="/settings" class="dropdown-item">
-							Settings
-						</a> --}}
-						<a href="/timer" class="dropdown-item">
-							Track a Time!
+						<a class="navbar-item" href="/timer">
+							Track a Time
 						</a>
-						<a href="/contact" class="dropdown-item">
-							Contact Us!
+						<a class="navbar-item" href="/contact">
+							Contact Us
 						</a>
-						<a href="../public/About.html" class="dropdown-item">
-							About us
+						<a class="navbar-item" href="/about">
+							About Us
 						</a>
 					</div>
 				</div>
 			</div>
-			<button class="calButton" id="addActivity" onclick="location.href='/timer'">Track a Time</button>
-			<button class="calButton" id="signout-button" onclick="location.href='/logout'">Sign Out</button>
+		</div>
 	</nav>
 	{{{ body }}}
 	<script>
-		var dropdown = document.querySelector('.dropdown');
+		var dropdown = document.querySelector('.has-dropdown');
 		dropdown.addEventListener('click', function (event) {
 			event.stopPropagation();
 			dropdown.classList.toggle('is-active');
