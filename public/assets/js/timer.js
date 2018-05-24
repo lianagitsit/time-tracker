@@ -55,7 +55,7 @@ var clock = {
     time: 0,
     start: function () {
         if (!clockRunning) {
-            intervalId = setInterval(clock.count, 50);
+            intervalId = setInterval(clock.count, 25);
             clockRunning = true;
         }
     },
