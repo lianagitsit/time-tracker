@@ -19,46 +19,43 @@
 <body>
 	<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
-			<div class="navbar-item">
-				<img src="http://images.slackreview.com/logos/trackytimetracker.png" alt="Time Tracker: keeping you on time" width="50" height="60"
-				 margin="0" padding="0">
+			<img src="http://images.slackreview.com/logos/trackytimetracker.png" onclick="location.href='/calendar'" width="60px">
+		</div>
+		<div class="navbar-menu">
+			<div class="navbar-start">
+				<h1 class="title">Time Tracker</h1>
+				<h4>Get up, get organized, get there on time!</h4>
 			</div>
-			<div class="dropdown" "is-right">
-				<div class="dropdown-trigger">
-					<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-						<span>Menu</span>
-						<span class="icon is-small">
-							<i class="fas fa-angle-down" aria-hidden="true"></i>
-						</span>
-					</button>
+			<div class="navbar-end">
+				<div id="navButtons">
+					<button class="calButton" id="addActivity" onclick="location.href='/timer'">Track a Time</button>
+					<button class="calButton" id="signout-button" onclick="location.href='/logout'">Sign Out</button>
 				</div>
-				<div class="dropdown-menu" id="dropdown-menu" role="menu">
-					<div class="dropdown-content">
-						<a href="/calendar" class="dropdown-item">
+				<div class="navbar-item has-dropdown">
+					<a class="navbar-link">
+						Menu
+					</a>
+					<div class="navbar-dropdown">
+						<a class="navbar-item" href="/calendar">
 							Calendar
 						</a>
-						{{!--
-						<a href="/settings" class="dropdown-item">
-							Settings
-						</a> --}}
-						<a href="/timer" class="dropdown-item">
-							Track a Time!
+						<a class="navbar-item" href="/timer">
+							Track a Time
 						</a>
-						<a href="/contact" class="dropdown-item">
-							Contact Us!
+						<a class="navbar-item" href="/contact">
+							Contact Us
 						</a>
-						<a href="../public/About.html" class="dropdown-item">
-							About us
+						<a class="navbar-item" href="/about">
+							About Us
 						</a>
 					</div>
 				</div>
 			</div>
-			<button class="calButton" id="addActivity" onclick="location.href='/timer'">Track a Time</button>
-			<button class="calButton" id="signout-button" onclick="location.href='/logout'">Sign Out</button>
+		</div>
 	</nav>
 	{{{ body }}}
 	<script>
-		var dropdown = document.querySelector('.dropdown');
+		var dropdown = document.querySelector('.has-dropdown');
 		dropdown.addEventListener('click', function (event) {
 			event.stopPropagation();
 			dropdown.classList.toggle('is-active');
