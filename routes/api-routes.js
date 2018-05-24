@@ -92,13 +92,21 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/api/time", function(req, res) {
+    app.post("/api/time", 
+        require('connect-ensure-login').ensureLoggedIn(),
+        function(req, res) {
         db.Activity.create({
+<<<<<<< HEAD
             name: req.body.name,
             time: req.body.user_time
+=======
+            name: req.body.activity_type,
+            time: req.body.user_time,
+            UserId: req.user.id
+>>>>>>> 3c837c296728573db03b8c99c5e8e93808813d8b
         }).then(function(dbActivity){
             res.json(dbActivity);
-            res.send("It worked!");
+            // res.send("It worked!");
         })
         
         // req.body.user_time in order to access the info from the timer
