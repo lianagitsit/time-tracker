@@ -18,18 +18,22 @@ $(document).ready(function () {
         clock.time = 0;
         //push data to the db here???
 
-        var savedTime = $("#timer").text();
+        var logged = $("#timer").text();
+        var savedTime = parseInt(logged.slice(0, logged.indexOf(":")));
         console.log(savedTime);
+        getTime(savedTime);
+
     })
 
 
 
-    var getTime = function () {
+    var getTime = function (time) {
         $.ajax({
             method: "POST",
             url: "/api/time",
             data: {
-                "user_time": savedTime
+                "activity_type": "general",
+                "user_time": time
             }
         })
             .then(function (response) {
@@ -37,7 +41,6 @@ $(document).ready(function () {
             })
 
     }
-    getTime();
 
     // //Noah says that we would want to create an item on the first submission, then after we would update them?
 
@@ -59,7 +62,7 @@ var clock = {
     count: function () {
         clock.time++;
         var converted = clock.timeConverter(clock.time);
-        console.log(converted);
+        // console.log(converted);
         $("#timer").text(converted);
 
     },
