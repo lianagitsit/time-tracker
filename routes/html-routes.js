@@ -1,5 +1,6 @@
 var path = require("path");
 var db = require("../models");
+var passport = require("passport");
 
 module.exports = function(app){
 
@@ -11,8 +12,10 @@ module.exports = function(app){
         res.render("calendar");
     });
 
-    app.get("/timer", function (req, res) {
-        res.sendFile(path.join(__dirname, "../public/Timer.html"));
+    app.get("/timer", 
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+            res.sendFile(path.join(__dirname, "../public/Timer.html"));
     })
 
     app.get("/addEvent", function (req, res) {
