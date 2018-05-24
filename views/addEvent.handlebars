@@ -59,7 +59,6 @@
             }
         };
         getResource(resource);
-        window.location.href="/calendar";
     });
 
     var getResource = function (resource) {
@@ -71,6 +70,7 @@
             }
         }).then(function (response) {
             console.log(response);
+            window.location.href="/calendar";
         })
     };
 </script>

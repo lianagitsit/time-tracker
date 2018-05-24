@@ -21,6 +21,7 @@
     "fullcalendar": "^3.9.0",
     "googleapis": "^27.0.0",
     "handlebars": "^4.0.11",
+    "moment": "^2.22.1",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
     "passport": "^0.4.0",
