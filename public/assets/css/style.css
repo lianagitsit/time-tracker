@@ -109,10 +109,12 @@
 
 #errorLogin h2 {
     font-size: 40pt;
+    color: #4a4a4a;
 }
 
 #errorLogin h4 {
     font-size: 20pt;
+    color: #4a4a4a;
 }
 
 /* Contact Us CSS */
